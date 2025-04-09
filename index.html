@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Project Hub 2.0</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body onkeydown="if (event.key === 'Enter') showProjects();">
+    <div class="container">
+        <div class="logo-container">
+            <img src="https://jp.mathworks.com/academia/tah-portal/vignans-institute-of-information-technology-31665826/_jcr_content/schoolLogo.adapt.1200.medium.png/1681902728554.png" alt="VIGNAN logo" class="logo" style="width: 100%; height: auto;"/>
+        </div>
+        <header class="header">
+            <h1 style="color: #2563eb;">PROJECT HUB</h1>
+            <p style="font-size: 1.2rem; color: #6b7280; margin-top: 0.5rem;">Explore innovative projects by students</p>
+            
+            <!-- About Us Link -->
+            <p><a href="#" id="aboutUsLink" class="about-us-link">About Us</a></p>
+        </header>
+
+        <!-- About Us Modal -->
+        <div id="aboutUsModal" class="modal">
+            <div class="modal-content">
+                <h2>About Us</h2>
+                <p>This page was created by the <strong>Advanced Computer Science Engineering (ACSE)</strong> department.</p>
+                <p>Technologies used: <strong>HTML, CSS, JavaScript</strong>, and backend integrated with <strong>Supabase</strong>.</p>
+                <p>For queries and suggestions, contact: <a href="mailto:projecthubqueries@gmail.com">projecthubqueries@gmail.com</a></p>
+                <button class="close-btn" onclick="closeAboutUsModal()">Close</button>
+            </div>
+        </div>
+
+        <section class="filter-section">
+            <div class="filter-group">
+                <div class="custom-select">
+                    <select id="department" onchange="updateYearOptions()">
+                        <option value="">Select Department</option>
+                        <option value="CSE">Computer Science Engineering</option>
+                        <option value="EEE">Electrical and Electronics Engineering</option>
+                        <option value="ACSE">Advanced Computer Science</option>
+                    </select>
+                </div>
+                
+                <div class="custom-select">
+                    <select id="year">
+                        <option value="">Select Year</option>
+                    </select>
+                </div>
+                
+                <button class="submit-btn" onclick="showProjects()">Show Projects</button>
+            </div>
+        </section>
+
+        <div id="projectsContainer">
+           
+        </div>
+
+        <div class="add-project-box">
+            Add your projects to hub by filling the form >>
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSe_NmafyhPvfDwSQboOnuHkC9CLWKXQd40VLNkkF-NNCj9tYQ/viewform?usp=header" target="_blank">click here</a>
+        </div>
+
+       
+        
+        <button id="reviewBtn" class="review-btn" onclick="openReviewModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Review
+        </button>
+
+        
+        <div id="reviewModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Leave a Review</h2>
+                    <button id="viewReviewsButton" class="view-reviews-btn" onclick="viewReviews()">View Reviews</button>
+                </div>
+                <form id="reviewForm" onsubmit="submitReview(event)">
+                    <div class="form-group">
+                        <label>Your Name</label>
+                        <input type="text" id="userName" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Interface Rating</label>
+                        <div class="star-rating" data-rating="5" id="interfaceRating">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Content Rating</label>
+                        <div class="star-rating" data-rating="5" id="contentRating">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Usability Rating</label>
+                        <div class="star-rating" data-rating="5" id="usabilityRating">
+                            <span class="star" data-value="1">★</span>
+                            <span class="star" data-value="2">★</span>
+                            <span class="star" data-value="3">★</span>
+                            <span class="star" data-value="4">★</span>
+                            <span class="star" data-value="5">★</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Feedback/Suggestion:</label>
+                        <textarea id="feedback" rows="4"></textarea>
+                    </div>
+
+                    <div class="modal-buttons">
+                        <button type="button" onclick="closeReviewModal()" class="cancel-btn">Cancel</button>
+                        <button type="submit" class="submit-btn">Submit Review</button>
+                    </div>
+                </form>
+
+                
+                <div id="reviewsContainer" class="reviews-container" style="display: none;">
+                    <h3>User Reviews</h3>
+                    <div id="reviewsList"></div>
+                </div>
+            </div>
+        </div>
+
+        <div id="viewReviewsModal" class="modal">
+            <div class="modal-content">
+                <h2>User Reviews</h2>
+                <div id="viewReviewsList"></div>
+                <button class="close-btn" onclick="closeViewReviewsModal()">Close</button>
+            </div>
+        </div>
+
+        <div class="footer-box">
+            @Copyrighted by Project Hub 2025
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="script.js"></script>
+</body>
+</html>
